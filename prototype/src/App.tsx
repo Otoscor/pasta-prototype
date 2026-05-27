@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import MobileFrame from './components/layout/MobileFrame'
 import Login from './screens/Login'
@@ -21,7 +21,7 @@ type Screen =
   | 'shop-home' | 'shop-detail' | 'shop-my'
   | 'food-scan' | 'food-scan-camera' | 'food-scan-search' | 'food-scan-result'
 
-const SHOP_TABS = new Set<Screen>(['shop-home', 'food-scan', 'shop-my'])
+const SHOP_TABS = new Set<Screen>(['shop-home', 'food-scan', 'shop-my', 'shop-detail'])
 
 export default function App() {
   const [authed, setAuthed] = useState(() => localStorage.getItem('pasta_auth') === 'true')
@@ -30,8 +30,20 @@ export default function App() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedProduct, setSelectedProduct] = useState<any>(null)
   const [scannedFood, setScannedFood] = useState<FoodItem | undefined>(undefined)
+  // 1 = shop-home→detail (슬라이드 레프트), -1 = detail→shop-home (슬라이드 라이트)
+  const [shopDir, setShopDir] = useState(1)
+  const shopInited = useRef(false)
 
   const navigate = (next: Screen) => {
+    if (next === 'shop-detail') {
+      setShopDir(1)
+      shopInited.current = true
+    } else if (screen === 'shop-detail') {
+      setShopDir(-1)
+    }
+    if (!SHOP_TABS.has(next)) {
+      shopInited.current = false
+    }
     setPrevScreen(screen)
     setScreen(next)
   }
@@ -65,7 +77,6 @@ export default function App() {
           onNavigate={(id) => navigate((id === 'shop-scan' ? 'food-scan' : id) as Screen)}
         />
       )
-
       case 'food-scan': return (
         <FoodScan
           onBack={goHome}
@@ -78,19 +89,13 @@ export default function App() {
       case 'food-scan-camera': return (
         <FoodScanCamera
           onBack={() => navigate('food-scan')}
-          onResult={() => {
-            setScannedFood(undefined)
-            navigate('food-scan-result')
-          }}
+          onResult={() => { setScannedFood(undefined); navigate('food-scan-result') }}
         />
       )
       case 'food-scan-search': return (
         <FoodScanSearch
           onBack={() => navigate('food-scan')}
-          onSelect={(food) => {
-            setScannedFood(food)
-            navigate('food-scan-result')
-          }}
+          onSelect={(food) => { setScannedFood(food); navigate('food-scan-result') }}
         />
       )
       case 'food-scan-result': return (
@@ -100,7 +105,6 @@ export default function App() {
           onAdded={goHome}
         />
       )
-
       default: return (
         <Home onNavigate={(s) => {
           navigate((s === 'shop-scan' ? 'food-scan' : s) as Screen)
@@ -138,7 +142,25 @@ export default function App() {
             className="absolute inset-0"
             style={{ zIndex: 10 }}
           >
-            {renderScreen()}
+            {/* 좌우 슬라이드: tab ↔ detail 전환 시에만 애니메이션 */}
+            <AnimatePresence custom={shopDir}>
+              <motion.div
+                key={screen === 'shop-detail' ? 'detail' : 'tab'}
+                custom={shopDir}
+                variants={{
+                  initial: (d: number) => ({ x: d > 0 ? '100%' : '-100%' }),
+                  animate: { x: 0 },
+                  exit:    (d: number) => ({ x: d > 0 ? '-100%' : '100%' }),
+                }}
+                initial={shopInited.current ? 'initial' : false}
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 0.36, ease: [0.32, 0.72, 0, 1] }}
+                className="absolute inset-0"
+              >
+                {renderScreen()}
+              </motion.div>
+            </AnimatePresence>
           </motion.div>
         )}
       </AnimatePresence>
