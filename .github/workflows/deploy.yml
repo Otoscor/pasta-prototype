@@ -35,6 +35,9 @@ jobs:
       - name: Build
         run: npm run build
         working-directory: prototype
+        env:
+          VITE_AUTH_ID: ${{ secrets.VITE_AUTH_ID }}
+          VITE_AUTH_PW: ${{ secrets.VITE_AUTH_PW }}
 
       - uses: actions/configure-pages@v4
         with:

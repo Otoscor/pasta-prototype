@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import MobileFrame from './components/layout/MobileFrame'
+import Login from './screens/Login'
 import Home from './screens/Home'
 import MealRecord from './screens/MealRecord'
 import Dashboard from './screens/Dashboard'
@@ -22,6 +23,7 @@ type Screen =
 const SHOP_TABS = new Set<Screen>(['shop-home', 'food-scan', 'shop-my'])
 
 export default function App() {
+  const [authed, setAuthed] = useState(() => localStorage.getItem('pasta_auth') === 'true')
   const [screen, setScreen] = useState<Screen>('home')
   const [prevScreen, setPrevScreen] = useState<Screen>('home')
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -104,6 +106,14 @@ export default function App() {
         }} />
       )
     }
+  }
+
+  if (!authed) {
+    return (
+      <MobileFrame>
+        <Login onLogin={() => setAuthed(true)} />
+      </MobileFrame>
+    )
   }
 
   return (
