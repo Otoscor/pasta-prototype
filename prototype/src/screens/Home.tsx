@@ -238,18 +238,16 @@ export default function Home({ onNavigate }: { onNavigate: (screen: string) => v
         </div>
       </div>
 
-      {/* Nav — primary / contextual (sequenced) */}
-      <AnimatePresence mode="wait">
-        {navState.mode === 'primary' ? (
-
-          /* ── Primary Bottom Tab Bar ── */
+      {/* Primary Bottom Tab Bar */}
+      <AnimatePresence>
+        {navState.mode === 'primary' && (
           <motion.div
             key="primary-bar"
-            initial={{ y: 80, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 80, opacity: 0 }}
-            transition={{ duration: 0.2, ease: 'easeInOut' }}
-            className="absolute bottom-0 left-0 right-0 bg-bg-card border-t border-border-dark h-[64px] flex items-center justify-around px-2 pb-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="absolute bottom-0 left-0 right-0 bg-bg-card border-t border-border-dark h-[64px] flex items-center justify-around px-2 pt-1 pb-2"
           >
             {NAV_ITEMS.map(({ id, label, icon: Icon, subNav }) => {
               const isActive = activeNav === id
@@ -276,18 +274,21 @@ export default function Home({ onNavigate }: { onNavigate: (screen: string) => v
               )
             })}
           </motion.div>
+        )}
+      </AnimatePresence>
 
-        ) : (
-
-          /* ── Contextual Floating Tab Bar ── */
+      {/* Contextual Floating Tab Bar */}
+      <AnimatePresence>
+        {navState.mode === 'contextual' && (
           <motion.div
             key="contextual-floating"
             initial={{ opacity: 0, y: 24, scale: 0.92 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 24, scale: 0.92 }}
-            transition={{ duration: 0.22, ease: [0.34, 1.26, 0.64, 1] }}
+            exit={{ opacity: 0, y: 80 }}
+            transition={{ duration: 0.16, ease: [0.4, 0, 1, 1] }}
             className="absolute bottom-5 left-0 right-0 mx-auto w-fit bg-bg-card border border-border-dark rounded-2xl shadow-2xl flex items-center px-2 py-2 h-[60px]"
           >
+            {/* 뒤로가기 */}
             <motion.button
               whileTap={{ scale: 0.88 }}
               transition={{ type: 'spring', stiffness: 500, damping: 25 }}
@@ -297,6 +298,7 @@ export default function Home({ onNavigate }: { onNavigate: (screen: string) => v
               <ArrowDown size={20} weight="bold" className="text-text-secondary" />
             </motion.button>
 
+            {/* 서브 탭 3개 */}
             {SHOP_SUB_NAV.map(({ id, label, icon: Icon }) => {
               const isActive = activeSubNav === id
               return (
@@ -314,7 +316,6 @@ export default function Home({ onNavigate }: { onNavigate: (screen: string) => v
               )
             })}
           </motion.div>
-
         )}
       </AnimatePresence>
     </div>

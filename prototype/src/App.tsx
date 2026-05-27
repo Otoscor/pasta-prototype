@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import MobileFrame from './components/layout/MobileFrame'
 import Login from './screens/Login'
 import Home from './screens/Home'
@@ -112,9 +113,35 @@ export default function App() {
     return <Login onLogin={() => setAuthed(true)} />
   }
 
+  const isShop = SHOP_TABS.has(screen)
+  const homeNav = (s: string) => navigate((s === 'shop-scan' ? 'food-scan' : s) as Screen)
+
   return (
     <MobileFrame>
-      {renderScreen()}
+      {/* 베이스 레이어: 샵 진입 시 홈이 뒤에 남아 있어 slide-down 시 드러남 */}
+      <div className="absolute inset-0">
+        {isShop
+          ? <Home key="bg" onNavigate={homeNav} />
+          : renderScreen()
+        }
+      </div>
+
+      {/* 샵 오버레이: 아래에서 슬라이드업, 탭 전환 시 key 유지로 애니메이션 없음 */}
+      <AnimatePresence>
+        {isShop && (
+          <motion.div
+            key="shop-overlay"
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%', transition: { duration: 0.68, ease: [0.16, 1, 0.3, 1] } }}
+            transition={{ duration: 0.52, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-0"
+            style={{ zIndex: 10 }}
+          >
+            {renderScreen()}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </MobileFrame>
   )
 }
