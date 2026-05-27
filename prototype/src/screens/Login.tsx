@@ -39,17 +39,6 @@ export default function Login({ onLogin }: { onLogin: () => void }) {
           gap: '12px',
         }}
       >
-        <p style={{
-          fontFamily: "'Pretendard', -apple-system, sans-serif",
-          fontSize: '20px',
-          fontWeight: 700,
-          color: '#ffffff',
-          marginBottom: '24px',
-          letterSpacing: '-0.3px',
-        }}>
-          pasta
-        </p>
-
         <input
           type="text"
           placeholder="아이디"
