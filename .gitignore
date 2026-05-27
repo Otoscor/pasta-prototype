@@ -1,0 +1,26 @@
+# Claude Code 설정
+.claude/
+
+# 레퍼런스 이미지 (대용량)
+images/refimages/
+
+# 스크래퍼
+scraper/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Node
+node_modules/
+npm-debug.log*
+
+# 환경변수
+.env
+.env.*
+
+# 에디터
+.idea/
+.vscode/
+*.suo
+*.sw?
