@@ -167,12 +167,13 @@ export default function ShopDetail({
       >
 
         {/* Hero — product image */}
-        <div className="w-full h-[320px] flex-none">
+        <div className="relative w-full h-[320px] flex-none">
           <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60" />
         </div>
 
         {/* Section 1 — Brand / Name / Price / Stepper */}
-        <div className="bg-bg-card mx-base mt-3 mb-3 rounded-xl px-4 pt-4 pb-4">
+        <div className="bg-bg-card mx-base mt-6 mb-3 rounded-xl px-4 pt-4 pb-4">
 
           {/* Brand */}
           <span className="text-[12px] text-text-secondary">{detail.brand}</span>
