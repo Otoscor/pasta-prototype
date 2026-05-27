@@ -109,11 +109,7 @@ export default function App() {
   }
 
   if (!authed) {
-    return (
-      <MobileFrame>
-        <Login onLogin={() => setAuthed(true)} />
-      </MobileFrame>
-    )
+    return <Login onLogin={() => setAuthed(true)} />
   }
 
   return (

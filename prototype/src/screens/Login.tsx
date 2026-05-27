@@ -19,35 +19,105 @@ export default function Login({ onLogin }: { onLogin: () => void }) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-full bg-bg-primary px-8">
-      <div className="mb-10 text-center">
-        <p className="text-[32px] font-black text-text-primary tracking-tight">pasta</p>
-        <p className="text-[13px] text-text-tertiary mt-1">프로토타입 미리보기</p>
-      </div>
+    <div style={{
+      width: '100vw',
+      height: '100svh',
+      background: '#0a0a0a',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          width: '100%',
+          maxWidth: '320px',
+          padding: '0 24px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '12px',
+        }}
+      >
+        <p style={{
+          fontFamily: "'Pretendard', -apple-system, sans-serif",
+          fontSize: '20px',
+          fontWeight: 700,
+          color: '#ffffff',
+          marginBottom: '24px',
+          letterSpacing: '-0.3px',
+        }}>
+          pasta
+        </p>
 
-      <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3">
         <input
           type="text"
           placeholder="아이디"
           value={id}
+          autoComplete="username"
           onChange={e => { setId(e.target.value); setError(false) }}
-          className="w-full h-[52px] bg-bg-input rounded-xl px-4 text-[15px] text-text-primary placeholder:text-text-tertiary outline-none border border-transparent focus:border-accent transition-colors"
+          style={{
+            width: '100%',
+            height: '48px',
+            background: '#161616',
+            border: '1px solid #222',
+            borderRadius: '10px',
+            padding: '0 16px',
+            fontSize: '14px',
+            color: '#ffffff',
+            fontFamily: "'Pretendard', -apple-system, sans-serif",
+            outline: 'none',
+            boxSizing: 'border-box',
+          }}
         />
+
         <input
           type="password"
           placeholder="비밀번호"
           value={pw}
+          autoComplete="current-password"
           onChange={e => { setPw(e.target.value); setError(false) }}
-          className="w-full h-[52px] bg-bg-input rounded-xl px-4 text-[15px] text-text-primary placeholder:text-text-tertiary outline-none border border-transparent focus:border-accent transition-colors"
+          style={{
+            width: '100%',
+            height: '48px',
+            background: '#161616',
+            border: '1px solid #222',
+            borderRadius: '10px',
+            padding: '0 16px',
+            fontSize: '14px',
+            color: '#ffffff',
+            fontFamily: "'Pretendard', -apple-system, sans-serif",
+            outline: 'none',
+            boxSizing: 'border-box',
+          }}
         />
 
         {error && (
-          <p className="text-[12px] text-accent-red text-center">아이디 또는 비밀번호가 올바르지 않습니다.</p>
+          <p style={{
+            fontSize: '12px',
+            color: '#ff4d4d',
+            margin: '0',
+            fontFamily: "'Pretendard', -apple-system, sans-serif",
+          }}>
+            아이디 또는 비밀번호를 확인해주세요.
+          </p>
         )}
 
         <button
           type="submit"
-          className="w-full h-[52px] bg-accent text-text-on-accent rounded-xl text-[15px] font-bold mt-1"
+          style={{
+            width: '100%',
+            height: '48px',
+            background: '#ffffff',
+            color: '#0a0a0a',
+            border: 'none',
+            borderRadius: '10px',
+            fontSize: '14px',
+            fontWeight: 600,
+            fontFamily: "'Pretendard', -apple-system, sans-serif",
+            cursor: 'pointer',
+            marginTop: '4px',
+          }}
         >
           로그인
         </button>
