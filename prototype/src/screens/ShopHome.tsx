@@ -1,9 +1,8 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import {
   MagnifyingGlass, Funnel, Heart, Lightning,
-  ArrowLeft, House, Scan, User,
 } from '@phosphor-icons/react'
+import ShopSubNav from '../components/ShopSubNav'
 
 interface Product {
   id: string
@@ -39,7 +38,7 @@ const MOCK_PRODUCTS: Product[] = [
     badge: '베스트',
     isLiked: false,
     freeShipping: true,
-    imageUrl: '/images/product-1.jpg',
+    imageUrl: `${import.meta.env.BASE_URL}images/product-1.jpg`,
   },
   {
     id: '2',
@@ -56,7 +55,7 @@ const MOCK_PRODUCTS: Product[] = [
     badge: '신상',
     isLiked: true,
     freeShipping: true,
-    imageUrl: '/images/product-2.jpg',
+    imageUrl: `${import.meta.env.BASE_URL}images/product-2.jpg`,
   },
   {
     id: '3',
@@ -72,7 +71,7 @@ const MOCK_PRODUCTS: Product[] = [
     recommendReason: '영양소 분석 결과 비타민D 부족이 감지됐어요',
     isLiked: false,
     freeShipping: false,
-    imageUrl: '/images/product-3.jpg',
+    imageUrl: `${import.meta.env.BASE_URL}images/product-3.jpg`,
   },
   {
     id: '4',
@@ -89,17 +88,12 @@ const MOCK_PRODUCTS: Product[] = [
     badge: '한정',
     isLiked: false,
     freeShipping: true,
-    imageUrl: '/images/product-4.jpg',
+    imageUrl: `${import.meta.env.BASE_URL}images/product-4.jpg`,
   },
 ]
 
 const CATEGORIES = ['전체', '단백질', '비타민', '다이어트', '음료']
 
-const SHOP_SUB_NAV = [
-  { id: 'shop-home', label: '홈',      icon: House },
-  { id: 'shop-scan', label: '푸드스캔', icon: Scan },
-  { id: 'shop-my',   label: '마이',     icon: User },
-]
 
 const BADGE_STYLES: Record<string, string> = {
   '신상': 'bg-accent-mint text-text-on-accent',
@@ -138,61 +132,48 @@ function ProductCard({ product, onPress }: { product: Product; onPress: () => vo
       </div>
 
       {/* Info */}
-      <div className="px-4 pt-3 pb-1">
-        <p className="text-[12px] text-text-secondary mb-0.5">{product.brand}</p>
+      <div className="px-4 pt-3 pb-4">
 
-        <p className="text-[15px] font-semibold text-text-primary leading-snug mb-2 line-clamp-2">
-          {product.name}
-        </p>
-
-        {/* Nutri tags */}
-        <div className="flex flex-wrap gap-1.5 mb-2">
-          {product.nutriTags.map(tag => (
-            <span key={tag} className="px-2 py-0.5 rounded-full bg-bg-input text-text-secondary text-[11px]">
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        {/* Rating + free shipping */}
-        <div className="flex items-center gap-1.5 mb-3">
-          <span className="text-accent text-[13px]">★</span>
-          <span className="text-[13px] font-semibold text-text-primary">{product.rating}</span>
-          <span className="text-[12px] text-text-tertiary">({product.reviewCount.toLocaleString()})</span>
+        {/* Brand + rating + free shipping */}
+        <div className="flex items-center gap-1.5 mb-1">
+          <span className="text-[12px] text-text-tertiary">{product.brand}</span>
+          <span className="text-text-tertiary text-[10px]">·</span>
+          <span className="text-accent text-[11px]">★</span>
+          <span className="text-[12px] text-text-secondary">{product.rating}</span>
+          <span className="flex-1" />
           {product.freeShipping && (
-            <span className="ml-1 text-[11px] text-accent-mint font-medium">무료배송</span>
+            <span className="text-[11px] text-accent-mint font-medium">무료배송</span>
           )}
         </div>
 
-        {/* Price */}
-        <div className="flex items-end justify-between">
-          <div>
-            <div className="flex items-center gap-1.5 mb-0.5">
-              <span className="text-[12px] text-text-tertiary line-through">
-                {product.originalPrice.toLocaleString()}원
-              </span>
-              <span className="text-[12px] font-bold text-accent-red">-{product.discountRate}%</span>
-            </div>
-            <p className="text-[18px] font-bold text-text-primary">
+        {/* Name */}
+        <p className="text-[15px] font-semibold text-text-primary leading-snug mb-1 line-clamp-1">
+          {product.name}
+        </p>
+
+        {/* PASTA score */}
+        <div className="flex items-center gap-2 py-1 mb-1">
+          <Lightning size={13} weight="fill" className="text-accent flex-none" />
+          <span className="text-[12px] text-accent font-bold">{product.pastaScore}점</span>
+          <span className="text-[12px] text-text-secondary truncate">"{product.recommendReason}"</span>
+        </div>
+
+        {/* Price + CTA */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-[13px] font-bold text-accent-red">-{product.discountRate}%</span>
+            <span className="text-[22px] font-bold text-text-primary">
               {product.price.toLocaleString()}원
-            </p>
+            </span>
           </div>
           <button
             onClick={(e) => e.stopPropagation()}
-            className="mb-0.5 px-4 py-2 bg-accent text-text-on-accent rounded-lg text-[13px] font-bold"
+            className="px-4 py-2 bg-accent text-text-on-accent rounded-lg text-[13px] font-bold"
           >
             담기
           </button>
         </div>
-      </div>
 
-      {/* PASTA Score */}
-      <div className="mx-4 mb-4 mt-3 bg-bg-input rounded-lg px-3 py-2.5 flex items-start gap-2">
-        <Lightning size={15} weight="fill" className="text-accent flex-none mt-[1px]" />
-        <div className="flex-1 min-w-0">
-          <span className="text-accent font-bold text-[13px]">PASTA {product.pastaScore}점</span>
-          <p className="text-[12px] text-text-secondary mt-0.5 leading-snug">{product.recommendReason}</p>
-        </div>
       </div>
     </div>
   )
@@ -201,9 +182,11 @@ function ProductCard({ product, onPress }: { product: Product; onPress: () => vo
 export default function ShopHome({
   onBack,
   onNavigate,
+  subNavAnimated = true,
 }: {
   onBack: () => void
   onNavigate?: (screen: string, data?: Product) => void
+  subNavAnimated?: boolean
 }) {
   const [activeCategory, setActiveCategory] = useState('전체')
   const [activeSubNav, setActiveSubNav] = useState('shop-home')
@@ -251,39 +234,12 @@ export default function ShopHome({
         ))}
       </div>
 
-      {/* Floating contextual sub-nav */}
-      <motion.div
-        initial={{ opacity: 0, y: 24, scale: 0.92 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.22, ease: [0.34, 1.26, 0.64, 1] }}
-        className="absolute bottom-5 left-0 right-0 mx-auto w-fit bg-bg-card border border-border-dark rounded-2xl shadow-2xl flex items-center px-2 py-2 h-[60px]"
-      >
-        <motion.button
-          whileTap={{ scale: 0.88 }}
-          transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-          onClick={onBack}
-          className="w-10 h-10 rounded-full bg-bg-input flex items-center justify-center flex-none ml-1"
-        >
-          <ArrowLeft size={20} weight="bold" className="text-text-secondary" />
-        </motion.button>
-
-        {SHOP_SUB_NAV.map(({ id, label, icon: Icon }) => {
-          const isActive = activeSubNav === id
-          return (
-            <motion.button
-              key={id}
-              whileTap={{ scale: 0.88 }}
-              transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-              onClick={() => { setActiveSubNav(id); onNavigate?.(id) }}
-              className={`flex flex-col items-center gap-0.5 w-[72px] justify-center
-                ${isActive ? 'text-accent' : 'text-text-tertiary'}`}
-            >
-              <Icon size={22} weight={isActive ? 'fill' : 'regular'} />
-              <span className="text-[11px] font-medium">{label}</span>
-            </motion.button>
-          )
-        })}
-      </motion.div>
+      <ShopSubNav
+        activeId="shop-home"
+        onBack={onBack}
+        onNavigate={(id) => { setActiveSubNav(id); onNavigate?.(id) }}
+        animated={subNavAnimated}
+      />
     </div>
   )
 }

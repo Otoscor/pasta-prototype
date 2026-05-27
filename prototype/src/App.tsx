@@ -19,13 +19,22 @@ type Screen =
   | 'shop-home' | 'shop-detail' | 'shop-my'
   | 'food-scan' | 'food-scan-camera' | 'food-scan-search' | 'food-scan-result'
 
+const SHOP_TABS = new Set<Screen>(['shop-home', 'food-scan', 'shop-my'])
+
 export default function App() {
   const [screen, setScreen] = useState<Screen>('home')
+  const [prevScreen, setPrevScreen] = useState<Screen>('home')
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedProduct, setSelectedProduct] = useState<any>(null)
   const [scannedFood, setScannedFood] = useState<FoodItem | undefined>(undefined)
 
-  const goHome = () => setScreen('home')
+  const navigate = (next: Screen) => {
+    setPrevScreen(screen)
+    setScreen(next)
+  }
+
+  const goHome = () => navigate('home')
+  const subNavAnimated = !SHOP_TABS.has(prevScreen)
 
   const renderScreen = () => {
     switch (screen) {
@@ -36,55 +45,62 @@ export default function App() {
       case 'shop-home':   return (
         <ShopHome
           onBack={goHome}
+          subNavAnimated={subNavAnimated}
           onNavigate={(s, data) => {
             if (s === 'shop-detail' && data) setSelectedProduct(data)
-            const mapped = s === 'shop-scan' ? 'food-scan' : s
-            setScreen(mapped as Screen)
+            navigate((s === 'shop-scan' ? 'food-scan' : s) as Screen)
           }}
         />
       )
       case 'shop-detail': return selectedProduct ? (
-        <ShopDetail product={selectedProduct} onBack={() => setScreen('shop-home')} />
+        <ShopDetail product={selectedProduct} onBack={() => navigate('shop-home')} />
       ) : null
-      case 'shop-my': return <ShopMy onBack={() => setScreen('shop-home')} />
+      case 'shop-my': return (
+        <ShopMy
+          onBack={goHome}
+          subNavAnimated={subNavAnimated}
+          onNavigate={(id) => navigate((id === 'shop-scan' ? 'food-scan' : id) as Screen)}
+        />
+      )
 
       case 'food-scan': return (
         <FoodScan
           onBack={goHome}
-          onScan={() => setScreen('food-scan-camera')}
-          onSearch={() => setScreen('food-scan-search')}
+          subNavAnimated={subNavAnimated}
+          onScan={() => navigate('food-scan-camera')}
+          onSearch={() => navigate('food-scan-search')}
+          onNavigate={(id) => navigate((id === 'shop-scan' ? 'food-scan' : id) as Screen)}
         />
       )
       case 'food-scan-camera': return (
         <FoodScanCamera
-          onBack={() => setScreen('food-scan')}
+          onBack={() => navigate('food-scan')}
           onResult={() => {
             setScannedFood(undefined)
-            setScreen('food-scan-result')
+            navigate('food-scan-result')
           }}
         />
       )
       case 'food-scan-search': return (
         <FoodScanSearch
-          onBack={() => setScreen('food-scan')}
+          onBack={() => navigate('food-scan')}
           onSelect={(food) => {
             setScannedFood(food)
-            setScreen('food-scan-result')
+            navigate('food-scan-result')
           }}
         />
       )
       case 'food-scan-result': return (
         <FoodScanResult
           food={scannedFood}
-          onBack={() => setScreen(scannedFood ? 'food-scan-search' : 'food-scan-camera')}
+          onBack={() => navigate(scannedFood ? 'food-scan-search' : 'food-scan-camera')}
           onAdded={goHome}
         />
       )
 
       default: return (
         <Home onNavigate={(s) => {
-          // shop-scan nav item → food-scan screen
-          setScreen((s === 'shop-scan' ? 'food-scan' : s) as Screen)
+          navigate((s === 'shop-scan' ? 'food-scan' : s) as Screen)
         }} />
       )
     }

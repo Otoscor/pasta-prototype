@@ -1,7 +1,8 @@
 import {
-  ArrowLeft, CreditCard, Package, Truck, CheckCircle,
+  CreditCard, Package, Truck, CheckCircle,
   CaretRight, Bell, Clipboard, Headset, SignOut, Target,
 } from '@phosphor-icons/react'
+import ShopSubNav from '../components/ShopSubNav'
 
 // ─── Mock data ────────────────────────────────────────────────────────────────
 
@@ -49,19 +50,24 @@ const SETTINGS = [
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function ShopMy({ onBack }: { onBack: () => void }) {
+export default function ShopMy({
+  onBack,
+  onNavigate,
+  subNavAnimated = true,
+}: {
+  onBack: () => void
+  onNavigate: (id: string) => void
+  subNavAnimated?: boolean
+}) {
   return (
     <div className="relative flex flex-col h-full bg-bg-primary text-text-primary overflow-hidden">
     <div
-      className="flex-1 overflow-y-auto"
+      className="flex-1 overflow-y-auto pb-[100px]"
       style={{ scrollbarWidth: 'none' } as React.CSSProperties}
     >
 
       {/* Header */}
-      <div className="flex items-center gap-3 px-base pt-4 pb-2">
-        <button onClick={onBack} className="w-10 h-10 flex items-center justify-center -ml-2">
-          <ArrowLeft size={22} weight="bold" />
-        </button>
+      <div className="px-base pt-5 pb-2">
         <span className="text-[18px] font-bold">마이</span>
       </div>
 
@@ -187,6 +193,8 @@ export default function ShopMy({ onBack }: { onBack: () => void }) {
       </div>
 
     </div>
+
+      <ShopSubNav activeId="shop-my" onBack={onBack} onNavigate={onNavigate} animated={subNavAnimated} />
     </div>
   )
 }

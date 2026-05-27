@@ -1,4 +1,5 @@
-import { Scan, MagnifyingGlass, ArrowLeft, Lightning } from '@phosphor-icons/react'
+import { Scan, MagnifyingGlass, Lightning } from '@phosphor-icons/react'
+import ShopSubNav from '../components/ShopSubNav'
 
 const RECENT_FOODS = [
   { id: 1, emoji: '🍗', name: '닭가슴살', kcal: 165 },
@@ -12,24 +13,20 @@ export default function FoodScan({
   onBack,
   onScan,
   onSearch,
+  onNavigate,
+  subNavAnimated = true,
 }: {
   onBack: () => void
   onScan: () => void
   onSearch: () => void
+  onNavigate: (id: string) => void
+  subNavAnimated?: boolean
 }) {
   return (
-    <div className="flex flex-col h-full bg-bg-primary text-text-primary">
-
-      {/* Header */}
-      <div className="flex items-center gap-3 px-base pt-4 pb-3">
-        <button onClick={onBack} className="w-10 h-10 flex items-center justify-center -ml-2">
-          <ArrowLeft size={22} weight="bold" />
-        </button>
-        <span className="text-[18px] font-bold">음식 기록</span>
-      </div>
+    <div className="relative flex flex-col h-full bg-bg-primary text-text-primary">
 
       {/* Title */}
-      <div className="px-base pt-4 pb-8">
+      <div className="px-base pt-8 pb-8">
         <p className="text-[26px] font-black text-text-primary leading-tight">
           오늘 뭐 드셨나요?
         </p>
@@ -106,6 +103,9 @@ export default function FoodScan({
           </div>
         </div>
       </div>
+
+      {/* Sub-nav */}
+      <ShopSubNav activeId="shop-scan" onBack={onBack} onNavigate={onNavigate} animated={subNavAnimated} />
 
     </div>
   )
