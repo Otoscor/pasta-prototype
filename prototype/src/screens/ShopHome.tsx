@@ -142,7 +142,7 @@ function ProductCard({ product, onPress }: { product: Product; onPress: () => vo
           <span className="text-[12px] text-text-secondary">{product.rating}</span>
           <span className="flex-1" />
           {product.freeShipping && (
-            <span className="text-[11px] text-accent-mint font-medium">무료배송</span>
+            <span className="text-[11px] text-white/60 font-medium">무료배송</span>
           )}
         </div>
 
@@ -189,7 +189,6 @@ export default function ShopHome({
   subNavAnimated?: boolean
 }) {
   const [activeCategory, setActiveCategory] = useState('전체')
-  const [activeSubNav, setActiveSubNav] = useState('shop-home')
 
   return (
     <div className="relative flex flex-col h-full bg-bg-primary text-text-primary overflow-hidden">
@@ -237,7 +236,7 @@ export default function ShopHome({
       <ShopSubNav
         activeId="shop-home"
         onBack={onBack}
-        onNavigate={(id) => { setActiveSubNav(id); onNavigate?.(id) }}
+        onNavigate={(id) => { onNavigate?.(id) }}
         animated={subNavAnimated}
       />
     </div>
