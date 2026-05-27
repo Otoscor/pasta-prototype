@@ -66,16 +66,16 @@ export default function Home({ onNavigate }: { onNavigate: (screen: string) => v
       <div className="flex-none bg-bg-primary">
         {/* Top Header */}
         <div className="flex items-center justify-between px-base pb-4">
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3">
             <button
               onClick={() => setActiveTab('weight')}
-              className={`text-[20px] font-bold ${activeTab === 'weight' ? 'text-text-primary' : 'text-text-tertiary'}`}
+              className={`text-[22px] font-bold ${activeTab === 'weight' ? 'text-text-primary' : 'text-text-tertiary'}`}
             >
               체중
             </button>
             <button
               onClick={() => setActiveTab('sugar')}
-              className={`text-[20px] font-bold ${activeTab === 'sugar' ? 'text-text-primary' : 'text-text-tertiary'}`}
+              className={`text-[22px] font-bold ${activeTab === 'sugar' ? 'text-text-primary' : 'text-text-tertiary'}`}
             >
               혈당
             </button>
