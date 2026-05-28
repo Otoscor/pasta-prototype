@@ -55,7 +55,7 @@ export default function FoodScanResult({
     <div className="relative flex flex-col h-full bg-bg-primary text-text-primary overflow-hidden">
 
       {/* Header */}
-      <div className="flex items-center gap-3 px-base pt-4 pb-3">
+      <div className="flex items-center gap-3 px-base pt-9 pb-3">
         <button onClick={onBack} className="w-10 h-10 flex items-center justify-center -ml-2">
           <ArrowLeft size={22} weight="bold" />
         </button>

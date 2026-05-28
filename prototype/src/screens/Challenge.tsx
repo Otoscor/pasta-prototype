@@ -4,7 +4,7 @@ export default function Challenge({ onBack }: { onBack: () => void }) {
   return (
     <div className="flex flex-col h-full bg-bg-primary text-text-primary overflow-y-auto">
       {/* Top Nav */}
-      <div className="flex items-center justify-between px-base pt-2 pb-3">
+      <div className="flex items-center justify-between px-base pt-7 pb-3">
         <button onClick={onBack} className="p-2 -ml-2">
           <ArrowLeft size={22} weight="regular" />
         </button>

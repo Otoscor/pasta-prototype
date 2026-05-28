@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowDown, House, Scan, User } from '@phosphor-icons/react'
+import { ArrowLeft, House, Scan, User } from '@phosphor-icons/react'
 
 const TABS = [
   { id: 'shop-home', label: '홈',      icon: House },
-  { id: 'shop-scan', label: '푸드스캔', icon: Scan  },
+  { id: 'shop-scan', label: '안심스캔', icon: Scan  },
   { id: 'shop-my',   label: '마이',     icon: User  },
 ]
 
@@ -38,7 +38,7 @@ export default function ShopSubNav({
         : { duration: 0.22, ease: [0.34, 1.26, 0.64, 1], delay: animated ? 0.44 : 0 }
       }
       className="absolute bottom-5 left-0 right-0 mx-auto w-fit
-                 bg-bg-card border border-border-dark rounded-2xl shadow-2xl
+                 bg-lt-card border border-lt-border rounded-2xl shadow-2xl
                  flex items-center px-2 py-2 h-[60px]"
     >
       {/* 뒤로가기 */}
@@ -46,9 +46,9 @@ export default function ShopSubNav({
         whileTap={{ scale: 0.88 }}
         transition={{ type: 'spring', stiffness: 500, damping: 25 }}
         onClick={handleBack}
-        className="w-10 h-10 rounded-full bg-bg-input flex items-center justify-center flex-none ml-1"
+        className="w-10 h-10 rounded-full bg-lt-input flex items-center justify-center flex-none ml-1"
       >
-        <ArrowDown size={20} weight="bold" className="text-text-secondary" />
+        <ArrowLeft size={20} weight="bold" className="text-lt-secondary" />
       </motion.button>
 
       {TABS.map(({ id, label, icon: Icon }) => {
@@ -60,7 +60,7 @@ export default function ShopSubNav({
             transition={{ type: 'spring', stiffness: 500, damping: 25 }}
             onClick={() => onNavigate(id)}
             className={`flex flex-col items-center gap-0.5 w-[72px] justify-center
-              ${isActive ? 'text-accent' : 'text-text-tertiary'}`}
+              ${isActive ? 'text-accent' : 'text-lt-tertiary'}`}
           >
             <Icon size={22} weight={isActive ? 'fill' : 'regular'} />
             <span className="text-[11px] font-medium">{label}</span>

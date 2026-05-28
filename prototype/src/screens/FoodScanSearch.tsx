@@ -44,7 +44,7 @@ export default function FoodScanSearch({
     <div className="flex flex-col h-full bg-bg-primary text-text-primary">
 
       {/* Search bar header */}
-      <div className="flex items-center gap-2 px-base pt-4 pb-3">
+      <div className="flex items-center gap-2 px-base pt-9 pb-3">
         <button onClick={onBack} className="w-10 h-10 flex items-center justify-center -ml-2 flex-none">
           <ArrowLeft size={22} weight="bold" />
         </button>

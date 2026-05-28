@@ -28,19 +28,44 @@
 | `--text-on-accent` | `#1A1A1A` | 골드 버튼 위 텍스트 |
 | `--border` | `#2E3648` | 카드 테두리, 구분선 |
 
-#### Light Theme (Cal AI 참조 - 대시보드)
+#### Light Theme (대시보드 & 샵)
 
-| 용도 | Hex | 설명 |
-|------|-----|------|
-| `--lt-bg-primary` | `#F2F2F7` | iOS 시스템 배경 |
-| `--lt-bg-card` | `#FFFFFF` | 카드 배경 |
-| `--lt-text-primary` | `#1C1C1E` | 주요 텍스트 |
-| `--lt-text-secondary` | `#8E8E93` | 부가 텍스트 |
-| `--lt-accent-red` | `#FF3B30` | 단백질 게이지 |
-| `--lt-accent-orange` | `#FF9500` | 탄수화물 게이지 |
-| `--lt-accent-blue` | `#007AFF` | 지방 게이지 |
-| `--lt-accent-green` | `#34C759` | 목표 달성, 오늘 날짜 |
-| `--lt-accent-black` | `#1C1C1E` | 칼로리 게이지 |
+> 대시보드와 샵(ShopHome · ShopDetail · ShopMy · ShopSubNav)이 공통으로 사용하는 라이트 모드 토큰.
+> Tailwind 클래스명은 `lt-*` 접두어 사용 (예: `bg-lt-bg`, `text-lt-text`).
+
+**배경 / 서피스**
+
+| Tailwind 토큰 | Hex | 용도 |
+|--------------|-----|------|
+| `lt-bg` | `#F2F2F7` | 메인 배경 (iOS 시스템 그레이) |
+| `lt-card` | `#FFFFFF` | 카드 배경 |
+| `lt-card-el` | `#F9F9F9` | Elevated 카드 (리뷰 아이템 등) |
+| `lt-input` | `#E5E5EA` | 입력 필드 배경, 아이콘 배경 |
+
+**텍스트**
+
+| Tailwind 토큰 | Hex | 용도 |
+|--------------|-----|------|
+| `lt-text` | `#1C1C1E` | 주요 텍스트 |
+| `lt-secondary` | `#8E8E93` | 보조 텍스트, 캡션 |
+| `lt-tertiary` | `#AEAEB2` | 비활성 텍스트, 플레이스홀더 |
+
+**테두리 / 구분선**
+
+| Tailwind 토큰 | Hex | 용도 |
+|--------------|-----|------|
+| `lt-border` | `#D1D1D6` | 카드 테두리, 구분선 (border / divide) |
+
+**액센트 (대시보드 게이지 전용)**
+
+| Tailwind 토큰 | Hex | 용도 |
+|--------------|-----|------|
+| `lt-red` | `#FF3B30` | 단백질 게이지 |
+| `lt-orange` | `#FF9500` | 탄수화물 게이지 |
+| `lt-blue` | `#007AFF` | 지방 게이지 |
+| `lt-green` | `#34C759` | 목표 달성, 오늘 날짜 |
+
+> `accent` (`#F5C518`), `accent-mint`, `accent-red` 등 글로벌 액센트 토큰은 라이트/다크 공용으로 유지.
 
 ### 1.2 타이포그래피
 

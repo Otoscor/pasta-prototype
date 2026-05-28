@@ -10,7 +10,7 @@ export default function ContentDetail({ onBack }: { onBack: () => void }) {
   return (
     <div className="flex flex-col h-full bg-white text-lt-text">
       {/* Top Nav */}
-      <div className="flex items-center justify-between px-base pt-2 pb-3">
+      <div className="flex items-center justify-between px-base pt-7 pb-3">
         <button onClick={onBack} className="p-2 -ml-2 text-lt-text">
           <ArrowLeft size={22} strokeWidth={1.5} />
         </button>

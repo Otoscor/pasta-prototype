@@ -22,11 +22,15 @@ export default {
         'text-tertiary': '#5A6477',
         'text-on-accent':'#1A1A1A',
         'border-dark':  '#2E3648',
-        // Light theme (dashboard)
+        // Light theme (dashboard & shop)
         'lt-bg':        '#F2F2F7',
         'lt-card':      '#FFFFFF',
+        'lt-card-el':   '#F9F9F9',
+        'lt-input':     '#E5E5EA',
         'lt-text':      '#1C1C1E',
         'lt-secondary': '#8E8E93',
+        'lt-tertiary':  '#AEAEB2',
+        'lt-border':    '#D1D1D6',
         'lt-red':       '#FF3B30',
         'lt-orange':    '#FF9500',
         'lt-blue':      '#007AFF',

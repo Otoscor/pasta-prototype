@@ -30,7 +30,7 @@ export default function Dashboard() {
     <div className="flex flex-col h-full bg-lt-bg font-sans">
       <div className="flex-1 overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between px-base pt-3 pb-2 bg-lt-bg">
+        <div className="flex items-center justify-between px-base pt-8 pb-2 bg-lt-bg">
           <div className="flex items-center gap-2">
             <span className="text-xl">🍎</span>
             <span className="text-lt-text font-bold text-lg">Cal AI</span>

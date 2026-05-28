@@ -34,7 +34,7 @@ export default function FoodScanCamera({
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-black/80 to-transparent z-10" />
 
       {/* Header */}
-      <div className="relative z-20 flex items-center justify-between px-base pt-4 pb-3">
+      <div className="relative z-20 flex items-center justify-between px-base pt-9 pb-3">
         <button
           onClick={onBack}
           className="w-10 h-10 flex items-center justify-center"

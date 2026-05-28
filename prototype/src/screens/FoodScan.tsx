@@ -1,13 +1,6 @@
-import { Scan, MagnifyingGlass, Lightning } from '@phosphor-icons/react'
+import { Scan, MagnifyingGlass } from '@phosphor-icons/react'
 import ShopSubNav from '../components/ShopSubNav'
 
-const RECENT_FOODS = [
-  { id: 1, emoji: '🍗', name: '닭가슴살', kcal: 165 },
-  { id: 2, emoji: '🍚', name: '현미밥', kcal: 310 },
-  { id: 3, emoji: '🥚', name: '삶은 달걀', kcal: 78 },
-  { id: 4, emoji: '🥗', name: '샐러드', kcal: 120 },
-  { id: 5, emoji: '🍌', name: '바나나', kcal: 89 },
-]
 
 export default function FoodScan({
   onBack,
@@ -23,15 +16,12 @@ export default function FoodScan({
   subNavAnimated?: boolean
 }) {
   return (
-    <div className="relative flex flex-col h-full bg-bg-primary text-text-primary">
+    <div className="relative flex flex-col h-full bg-lt-bg text-lt-text">
 
       {/* Title */}
-      <div className="px-base pt-8 pb-8">
-        <p className="text-[26px] font-black text-text-primary leading-tight">
-          오늘 뭐 드셨나요?
-        </p>
-        <p className="text-[14px] text-text-secondary mt-1.5">
-          AI가 칼로리를 자동으로 분석해요
+      <div className="px-base pt-[52px] pb-8">
+        <p className="text-[26px] font-semibold text-lt-text leading-tight">
+          내 몸에 맞는<br />프로틴 음료 찾기
         </p>
       </div>
 
@@ -53,55 +43,15 @@ export default function FoodScan({
         {/* Secondary — Search */}
         <button
           onClick={onSearch}
-          className="flex-1 h-[96px] bg-bg-card text-text-primary rounded-2xl
+          className="flex-1 h-[96px] bg-lt-card text-lt-text rounded-2xl
                      flex flex-col items-center justify-center gap-2 active:opacity-80 transition-opacity"
         >
-          <div className="w-10 h-10 rounded-xl bg-bg-input flex items-center justify-center">
-            <MagnifyingGlass size={22} weight="regular" className="text-text-secondary" />
+          <div className="w-10 h-10 rounded-xl bg-lt-input flex items-center justify-center">
+            <MagnifyingGlass size={22} weight="regular" className="text-lt-secondary" />
           </div>
           <p className="text-[15px] font-semibold leading-none">직접 검색하기</p>
         </button>
 
-      </div>
-
-      {/* Divider */}
-      <div className="flex items-center gap-3 px-base mt-8 mb-4">
-        <div className="flex-1 h-px bg-border-dark" />
-        <span className="text-[12px] text-text-tertiary">최근 기록</span>
-        <div className="flex-1 h-px bg-border-dark" />
-      </div>
-
-      {/* Recent foods */}
-      <div
-        className="flex gap-2.5 overflow-x-auto px-base pb-2"
-        style={{ scrollbarWidth: 'none' } as React.CSSProperties}
-      >
-        {RECENT_FOODS.map(food => (
-          <button
-            key={food.id}
-            className="flex-none flex flex-col items-center gap-2 bg-bg-card rounded-2xl px-4 py-3
-                       active:opacity-80 transition-opacity min-w-[80px]"
-          >
-            <span className="text-[28px] leading-none">{food.emoji}</span>
-            <span className="text-[12px] font-medium text-text-primary whitespace-nowrap">{food.name}</span>
-            <span className="text-[11px] text-text-tertiary">{food.kcal}kcal</span>
-          </button>
-        ))}
-      </div>
-
-      {/* Today summary banner */}
-      <div className="mx-base mt-6 bg-bg-card rounded-2xl px-4 py-3 flex items-center gap-3">
-        <Lightning size={18} weight="fill" className="text-accent flex-none" />
-        <div className="flex-1">
-          <span className="text-[13px] text-text-secondary">오늘 섭취</span>
-          <span className="text-[13px] font-bold text-text-primary ml-1.5">1,240</span>
-          <span className="text-[13px] text-text-tertiary"> / 1,800 kcal</span>
-        </div>
-        <div className="flex-none">
-          <div className="w-[80px] h-1.5 rounded-full bg-bg-input overflow-hidden">
-            <div className="h-full rounded-full bg-accent" style={{ width: '69%' }} />
-          </div>
-        </div>
       </div>
 
       {/* Sub-nav */}

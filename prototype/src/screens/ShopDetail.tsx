@@ -1,9 +1,6 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import {
-  ArrowLeft, Heart, Lightning,
-  Minus, Plus, ShoppingCart,
-} from '@phosphor-icons/react'
+import { ArrowLeft } from '@phosphor-icons/react'
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -100,13 +97,10 @@ export default function ShopDetail({
   product: BaseProduct
   onBack: () => void
 }) {
-  const [liked, setLiked] = useState(product.isLiked)
-  const [quantity, setQuantity] = useState(1)
   const [scrolled, setScrolled] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   const detail = getDetail(product)
-  const totalPrice = detail.price * quantity
 
   const handleScroll = () => {
     if (scrollRef.current) {
@@ -115,12 +109,12 @@ export default function ShopDetail({
   }
 
   return (
-    <div className="relative flex flex-col bg-bg-primary text-text-primary overflow-hidden -mt-11" style={{ height: 'calc(100% + 44px)' }}>
+    <div className="relative flex flex-col bg-lt-bg text-lt-text overflow-hidden -mt-6" style={{ height: 'calc(100% + 24px)' }}>
 
       {/* ── Fixed header ── */}
       <motion.div
         className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-base pt-3 pb-4 pointer-events-none overflow-hidden"
-        animate={{ backgroundColor: scrolled ? '#0D1117' : 'transparent' }}
+        animate={{ backgroundColor: scrolled ? '#FFFFFF' : 'transparent' }}
         transition={{ duration: 0.2 }}
         style={!scrolled ? { background: 'linear-gradient(to bottom, rgba(0,0,0,0.6), transparent)' } : {}}
       >
@@ -128,7 +122,7 @@ export default function ShopDetail({
           onClick={onBack}
           className="pointer-events-auto w-10 h-10 flex items-center justify-center"
         >
-          <ArrowLeft size={22} weight="bold" className={`drop-shadow ${scrolled ? 'text-text-primary' : 'text-white'}`} />
+          <ArrowLeft size={22} weight="bold" className={`drop-shadow ${scrolled ? 'text-lt-text' : 'text-white'}`} />
         </button>
 
         <AnimatePresence>
@@ -139,23 +133,14 @@ export default function ShopDetail({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 4 }}
               transition={{ duration: 0.18 }}
-              className="absolute inset-x-0 text-center text-[15px] font-bold text-text-primary truncate px-14 pointer-events-none"
+              className="absolute inset-x-0 text-center text-[15px] font-bold text-lt-text truncate px-14 pointer-events-none"
             >
               {detail.name}
             </motion.span>
           )}
         </AnimatePresence>
 
-        <button
-          onClick={() => setLiked(l => !l)}
-          className="pointer-events-auto w-10 h-10 flex items-center justify-center"
-        >
-          <Heart
-            size={22}
-            weight={liked ? 'fill' : 'regular'}
-            className={`drop-shadow ${liked ? 'text-accent-red' : scrolled ? 'text-text-primary' : 'text-white'}`}
-          />
-        </button>
+        <div className="w-10 h-10" />
       </motion.div>
 
       {/* ── Scrollable body ── */}
@@ -172,95 +157,49 @@ export default function ShopDetail({
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60" />
         </div>
 
-        {/* Section 1 — Brand / Name / Price / Stepper */}
-        <div className="bg-bg-card mx-base mt-6 mb-3 rounded-xl px-4 pt-4 pb-4">
-
-          {/* Brand */}
-          <span className="text-[12px] text-text-secondary">{detail.brand}</span>
-
-          {/* Name */}
-          <p className="text-[17px] font-semibold text-text-primary leading-snug mt-1 mb-4">
-            {detail.name}
-          </p>
-
-          {/* Price row */}
-          <div className="flex items-center gap-2 mb-0.5">
-            <span className="text-[13px] text-text-tertiary line-through">
-              {detail.originalPrice.toLocaleString()}원
-            </span>
-            <span className="text-[13px] font-bold text-accent-red">-{detail.discountRate}%</span>
-            {detail.freeShipping && (
-              <span className="text-[12px] text-accent-mint font-medium ml-0.5">무료배송</span>
-            )}
-          </div>
-          <p className="text-[26px] font-black text-text-primary">
-            {detail.price.toLocaleString()}원
-          </p>
+        {/* Section 1 — 스켈레톤 */}
+        <div className="mx-base mt-6 mb-3 rounded-xl bg-lt-card px-4 pt-4 pb-4 flex flex-col gap-3">
+          <div className="h-3 w-20 rounded-full bg-lt-border" />
+          <div className="h-5 w-3/4 rounded-full bg-lt-border" />
+          <div className="h-4 w-1/3 rounded-full bg-lt-border" />
+          <div className="h-8 w-1/2 rounded-full bg-lt-border" />
         </div>
 
-        {/* Section 2 — PASTA 점수 */}
-        <div className="mx-base mb-3 rounded-xl bg-bg-card p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex-none w-[56px] h-[56px] rounded-full border-2 border-accent bg-accent/10
-                            flex flex-col items-center justify-center">
-              <span className="text-[20px] font-black text-accent leading-none">{detail.pastaScore}</span>
-              <span className="text-[9px] text-accent/70 font-medium">점</span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-1.5 mb-1">
-                <Lightning size={14} weight="fill" className="text-accent flex-none" />
-                <span className="text-[13px] font-bold text-text-primary">PASTA 추천</span>
-              </div>
-              <p className="text-[14px] text-text-secondary leading-snug">
-                "{detail.recommendReason}"
-              </p>
-            </div>
+        {/* Section 2 — 스켈레톤 */}
+        <div className="mx-base mb-3 rounded-xl bg-lt-card p-4 flex items-center gap-3">
+          <div className="w-14 h-14 rounded-full bg-lt-border flex-none" />
+          <div className="flex-1 flex flex-col gap-2">
+            <div className="h-3 w-24 rounded-full bg-lt-border" />
+            <div className="h-3 w-full rounded-full bg-lt-border" />
+            <div className="h-3 w-2/3 rounded-full bg-lt-border" />
           </div>
         </div>
 
-        {/* Section 3 — 영양 정보 2×2 그리드 */}
-        <div className="mx-base mb-3 rounded-xl bg-bg-card p-4">
-          <p className="text-[15px] font-bold text-text-primary mb-3">영양 정보</p>
+        {/* Section 3 — 스켈레톤 */}
+        <div className="mx-base mb-3 rounded-xl bg-lt-card p-4">
+          <div className="h-4 w-16 rounded-full bg-lt-border mb-4" />
           <div className="grid grid-cols-2 gap-2">
-            {([
-              { label: '칼로리',   value: `${detail.nutrition.calories}kcal` },
-              { label: '단백질',   value: `${detail.nutrition.protein}g` },
-              { label: '탄수화물', value: `${detail.nutrition.carbs}g` },
-              { label: '지방',     value: `${detail.nutrition.fat}g` },
-            ] as { label: string; value: string }[]).map(item => (
-              <div key={item.label} className="bg-bg-input rounded-xl px-4 py-3">
-                <p className="text-[11px] text-text-tertiary mb-1">{item.label}</p>
-                <p className="text-[22px] font-black text-text-primary leading-none">{item.value}</p>
+            {[0,1,2,3].map(i => (
+              <div key={i} className="bg-lt-input rounded-xl px-4 py-4 flex flex-col gap-2">
+                <div className="h-2.5 w-12 rounded-full bg-lt-border" />
+                <div className="h-6 w-16 rounded-full bg-lt-border" />
               </div>
             ))}
           </div>
         </div>
 
-        {/* Section 4 — 리뷰 */}
-        <div className="mx-base mb-3 rounded-xl bg-bg-card p-4">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-1.5">
-              <span className="text-[15px] font-bold text-text-primary">리뷰</span>
-              <span className="text-accent text-[14px] leading-none">★</span>
-              <span className="text-[15px] font-bold text-text-primary">{detail.rating}</span>
-              <span className="text-[13px] text-text-tertiary">({detail.reviewCount.toLocaleString()})</span>
-            </div>
-            <button className="text-[13px] text-text-tertiary">전체 보기 &gt;</button>
-          </div>
-
-          <div className="space-y-2">
-            {detail.reviews.map(rv => (
-              <div key={rv.id} className="bg-bg-input rounded-xl p-3">
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[13px] font-semibold text-text-primary">{rv.nickname}</span>
-                  <span className="text-[11px] text-text-tertiary">{rv.date}</span>
+        {/* Section 4 — 스켈레톤 */}
+        <div className="mx-base mb-3 rounded-xl bg-lt-card p-4">
+          <div className="h-4 w-20 rounded-full bg-lt-border mb-4" />
+          <div className="flex flex-col gap-3">
+            {[0,1,2].map(i => (
+              <div key={i} className="bg-lt-input rounded-xl p-3 flex flex-col gap-2">
+                <div className="flex justify-between">
+                  <div className="h-3 w-16 rounded-full bg-lt-border" />
+                  <div className="h-3 w-12 rounded-full bg-lt-border" />
                 </div>
-                <div className="flex items-center gap-0.5 mb-2">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <span key={i} className={`text-[12px] leading-none ${i < rv.rating ? 'text-accent' : 'text-text-tertiary'}`}>★</span>
-                  ))}
-                </div>
-                <p className="text-[13px] text-text-secondary leading-relaxed">{rv.text}</p>
+                <div className="h-3 w-full rounded-full bg-lt-border" />
+                <div className="h-3 w-2/3 rounded-full bg-lt-border" />
               </div>
             ))}
           </div>
@@ -269,39 +208,22 @@ export default function ShopDetail({
       </div>
 
       {/* ── Fixed bottom CTA ── */}
-      <div className="flex-none px-base py-3 bg-bg-primary border-t border-border-dark flex items-center gap-3">
+      <div className="flex-none px-base py-3 bg-lt-card border-t border-lt-border flex items-center gap-3">
 
-        {/* Quantity stepper */}
-        <div className="flex items-center border border-border-dark rounded-xl overflow-hidden flex-none">
-          <button
-            onClick={() => setQuantity(q => Math.max(1, q - 1))}
-            className="w-10 h-[56px] flex items-center justify-center active:bg-bg-input transition-colors"
-          >
-            <Minus size={15} className="text-text-secondary" />
-          </button>
-          <span className="w-9 text-center text-[15px] font-semibold text-text-primary select-none">
-            {quantity}
-          </span>
-          <button
-            onClick={() => setQuantity(q => q + 1)}
-            className="w-10 h-[56px] flex items-center justify-center active:bg-bg-input transition-colors"
-          >
-            <Plus size={15} className="text-text-secondary" />
-          </button>
-        </div>
-
-        {/* Cart button */}
         <motion.button
           whileTap={{ scale: 0.97 }}
           transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-          className="flex-1 h-[56px] bg-accent text-text-on-accent rounded-xl
-                     text-[16px] font-bold flex items-center justify-center gap-2"
+          className="flex-1 h-[56px] bg-lt-bg text-lt-text rounded-xl text-[15px] font-bold"
         >
-          <ShoppingCart size={20} weight="bold" />
-          장바구니 담기
-          <span className="font-normal text-[14px] opacity-80 ml-0.5">
-            ({totalPrice.toLocaleString()}원)
-          </span>
+          선물하기
+        </motion.button>
+
+        <motion.button
+          whileTap={{ scale: 0.97 }}
+          transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+          className="flex-1 h-[56px] bg-accent text-text-on-accent rounded-xl text-[15px] font-bold"
+        >
+          구매하기
         </motion.button>
 
       </div>

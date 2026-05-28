@@ -13,7 +13,7 @@ type NavState =
 
 const SHOP_SUB_NAV = [
   { id: 'shop-home', label: '홈',      icon: House },
-  { id: 'shop-scan', label: '푸드스캔', icon: Scan },
+  { id: 'shop-scan', label: '안심스캔', icon: Scan },
   { id: 'shop-my',   label: '마이',     icon: User },
 ]
 

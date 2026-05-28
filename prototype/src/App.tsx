@@ -1,5 +1,4 @@
-import { useState, useRef } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { useState } from 'react'
 import MobileFrame from './components/layout/MobileFrame'
 import Login from './screens/Login'
 import Home from './screens/Home'
@@ -31,19 +30,7 @@ export default function App() {
   const [selectedProduct, setSelectedProduct] = useState<any>(null)
   const [scannedFood, setScannedFood] = useState<FoodItem | undefined>(undefined)
   // 1 = shop-home→detail (슬라이드 레프트), -1 = detail→shop-home (슬라이드 라이트)
-  const [shopDir, setShopDir] = useState(1)
-  const shopInited = useRef(false)
-
   const navigate = (next: Screen) => {
-    if (next === 'shop-detail') {
-      setShopDir(1)
-      shopInited.current = true
-    } else if (screen === 'shop-detail') {
-      setShopDir(-1)
-    }
-    if (!SHOP_TABS.has(next)) {
-      shopInited.current = false
-    }
     setPrevScreen(screen)
     setScreen(next)
   }
@@ -117,53 +104,13 @@ export default function App() {
     return <Login onLogin={() => setAuthed(true)} />
   }
 
-  const isShop = SHOP_TABS.has(screen)
-  const homeNav = (s: string) => navigate((s === 'shop-scan' ? 'food-scan' : s) as Screen)
+  const isShopScreen = SHOP_TABS.has(screen)
 
   return (
-    <MobileFrame>
-      {/* 베이스 레이어: 샵 진입 시 홈이 뒤에 남아 있어 slide-down 시 드러남 */}
+    <MobileFrame lightMode={isShopScreen}>
       <div className="absolute inset-0">
-        {isShop
-          ? <Home key="bg" onNavigate={homeNav} />
-          : renderScreen()
-        }
+        {renderScreen()}
       </div>
-
-      {/* 샵 오버레이: 아래에서 슬라이드업, 탭 전환 시 key 유지로 애니메이션 없음 */}
-      <AnimatePresence>
-        {isShop && (
-          <motion.div
-            key="shop-overlay"
-            initial={{ y: '100%' }}
-            animate={{ y: 0 }}
-            exit={{ y: '100%', transition: { duration: 0.68, ease: [0.16, 1, 0.3, 1] } }}
-            transition={{ duration: 0.52, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute inset-0"
-            style={{ zIndex: 10 }}
-          >
-            {/* 좌우 슬라이드: tab ↔ detail 전환 시에만 애니메이션 */}
-            <AnimatePresence custom={shopDir}>
-              <motion.div
-                key={screen === 'shop-detail' ? 'detail' : 'tab'}
-                custom={shopDir}
-                variants={{
-                  initial: (d: number) => ({ x: d > 0 ? '100%' : '-100%' }),
-                  animate: { x: 0 },
-                  exit:    (d: number) => ({ x: d > 0 ? '-100%' : '100%' }),
-                }}
-                initial={shopInited.current ? 'initial' : false}
-                animate="animate"
-                exit="exit"
-                transition={{ duration: 0.36, ease: [0.32, 0.72, 0, 1] }}
-                className="absolute inset-0"
-              >
-                {renderScreen()}
-              </motion.div>
-            </AnimatePresence>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </MobileFrame>
   )
 }
