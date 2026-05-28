@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   ChatCircle, Gift, Bell, Camera, CheckCircle, Info,
   ArrowClockwise, CaretRight, Notebook, ChartBar, ShoppingBag, Users, SquaresFour,
-  ArrowDown, House, Scan, User,
+  ArrowLeft, House, Scan, User,
   type Icon as PhosphorIcon,
 } from '@phosphor-icons/react'
 
@@ -58,7 +58,6 @@ export default function Home({ onNavigate }: { onNavigate: (screen: string) => v
   const [activeTab, setActiveTab] = useState<'weight' | 'sugar'>('weight')
   const [activeNav, setActiveNav] = useState('today')
   const [navState, setNavState] = useState<NavState>({ mode: 'primary' })
-  const [activeSubNav, setActiveSubNav] = useState('shop-home')
 
   return (
     <div className="relative flex flex-col h-full bg-bg-primary text-text-primary overflow-hidden">
@@ -243,10 +242,9 @@ export default function Home({ onNavigate }: { onNavigate: (screen: string) => v
         {navState.mode === 'primary' && (
           <motion.div
             key="primary-bar"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 500, damping: 32 } }}
+            exit={{ opacity: 0, y: 16, transition: { duration: 0.16, ease: [0.4, 0, 1, 1] } }}
             className="absolute bottom-0 left-0 right-0 bg-bg-card border-t border-border-dark h-[64px] flex items-center justify-around px-2 pt-1 pb-2"
           >
             {NAV_ITEMS.map(({ id, label, icon: Icon, subNav }) => {
@@ -259,8 +257,7 @@ export default function Home({ onNavigate }: { onNavigate: (screen: string) => v
                   onClick={() => {
                     if (subNav) {
                       setNavState({ mode: 'contextual', parentId: id })
-                      setActiveSubNav(subNav[0].id)
-                      onNavigate(subNav[0].id)
+                      setTimeout(() => onNavigate(subNav[0].id), 280)
                     } else {
                       setActiveNav(id)
                     }
@@ -277,44 +274,31 @@ export default function Home({ onNavigate }: { onNavigate: (screen: string) => v
         )}
       </AnimatePresence>
 
-      {/* Contextual Floating Tab Bar */}
+      {/* Contextual Floating Tab Bar (전환 중 프리뷰) */}
       <AnimatePresence>
         {navState.mode === 'contextual' && (
           <motion.div
-            key="contextual-floating"
-            initial={{ opacity: 0, y: 24, scale: 0.92 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 80 }}
-            transition={{ duration: 0.16, ease: [0.4, 0, 1, 1] }}
-            className="absolute bottom-5 left-0 right-0 mx-auto w-fit bg-bg-card border border-border-dark rounded-2xl shadow-2xl flex items-center px-2 py-2 h-[60px]"
+            key="contextual-preview"
+            initial={{ opacity: 0, scale: 0.88, y: 8 }}
+            animate={{ opacity: 1, scale: 1, y: 0, transition: { type: 'spring', stiffness: 440, damping: 28 } }}
+            exit={{ opacity: 0, scale: 0.88, y: 8, transition: { duration: 0.16, ease: [0.4, 0, 1, 1] } }}
+            className="absolute bottom-5 left-0 right-0 mx-auto w-fit pointer-events-none
+                       bg-lt-card border border-lt-border rounded-2xl shadow-2xl
+                       flex items-center px-2 py-2 h-[60px]"
           >
-            {/* 뒤로가기 */}
-            <motion.button
-              whileTap={{ scale: 0.88 }}
-              transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-              onClick={() => setNavState({ mode: 'primary' })}
-              className="w-10 h-10 rounded-full bg-bg-input flex items-center justify-center flex-none ml-1"
-            >
-              <ArrowDown size={20} weight="bold" className="text-text-secondary" />
-            </motion.button>
-
-            {/* 서브 탭 3개 */}
-            {SHOP_SUB_NAV.map(({ id, label, icon: Icon }) => {
-              const isActive = activeSubNav === id
-              return (
-                <motion.button
-                  key={id}
-                  whileTap={{ scale: 0.88 }}
-                  transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-                  onClick={() => { setActiveSubNav(id); onNavigate(id) }}
-                  className={`flex flex-col items-center gap-0.5 w-[72px] justify-center
-                    ${isActive ? 'text-accent' : 'text-text-tertiary'}`}
-                >
-                  <Icon size={22} weight={isActive ? 'fill' : 'regular'} />
-                  <span className="text-[11px] font-medium">{label}</span>
-                </motion.button>
-              )
-            })}
+            <div className="w-10 h-10 rounded-full bg-lt-input flex items-center justify-center flex-none ml-1">
+              <ArrowLeft size={20} weight="bold" className="text-lt-secondary" />
+            </div>
+            {SHOP_SUB_NAV.map(({ id, label, icon: Icon }) => (
+              <div
+                key={id}
+                className={`flex flex-col items-center gap-0.5 w-[72px] justify-center
+                  ${id === 'shop-home' ? 'text-accent' : 'text-lt-tertiary'}`}
+              >
+                <Icon size={22} weight={id === 'shop-home' ? 'fill' : 'regular'} />
+                <span className="text-[11px] font-medium">{label}</span>
+              </div>
+            ))}
           </motion.div>
         )}
       </AnimatePresence>

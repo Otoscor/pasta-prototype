@@ -3,11 +3,9 @@ import ShopSubNav from '../components/ShopSubNav'
 export default function ShopMy({
   onBack,
   onNavigate,
-  subNavAnimated = true,
 }: {
   onBack: () => void
   onNavigate: (id: string) => void
-  subNavAnimated?: boolean
 }) {
   return (
     <div className="relative flex flex-col h-full bg-lt-bg text-lt-text overflow-hidden">
@@ -80,7 +78,7 @@ export default function ShopMy({
 
       </div>
 
-      <ShopSubNav activeId="shop-my" onBack={onBack} onNavigate={onNavigate} animated={subNavAnimated} />
+      <ShopSubNav activeId="shop-my" onBack={onBack} onNavigate={onNavigate} />
     </div>
   )
 }

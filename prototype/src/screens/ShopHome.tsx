@@ -174,11 +174,9 @@ function ProductCard({ product, onPress }: { product: Product; onPress: () => vo
 export default function ShopHome({
   onBack,
   onNavigate,
-  subNavAnimated = true,
 }: {
   onBack: () => void
   onNavigate?: (screen: string, data?: Product) => void
-  subNavAnimated?: boolean
 }) {
   return (
     <div className="relative flex flex-col h-full bg-lt-bg text-lt-text overflow-hidden">
@@ -202,7 +200,6 @@ export default function ShopHome({
         activeId="shop-home"
         onBack={onBack}
         onNavigate={(id) => { onNavigate?.(id) }}
-        animated={subNavAnimated}
       />
     </div>
   )

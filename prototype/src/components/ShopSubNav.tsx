@@ -12,12 +12,10 @@ export default function ShopSubNav({
   activeId,
   onBack,
   onNavigate,
-  animated = true,
 }: {
   activeId: string
   onBack: () => void
   onNavigate: (id: string) => void
-  animated?: boolean
 }) {
   const [exiting, setExiting] = useState(false)
 
@@ -28,20 +26,15 @@ export default function ShopSubNav({
 
   return (
     <motion.div
-      initial={animated ? { opacity: 0, y: 24, scale: 0.92 } : false}
+      initial={false}
       animate={exiting
-        ? { y: 80, opacity: 0, scale: 1 }
-        : { y: 0, opacity: 1, scale: 1 }
-      }
-      transition={exiting
-        ? { duration: 0.20, ease: [0.4, 0, 1, 1] }
-        : { duration: 0.22, ease: [0.34, 1.26, 0.64, 1], delay: animated ? 0.44 : 0 }
+        ? { y: 72, opacity: 0, transition: { duration: 0.22, ease: [0.4, 0, 1, 1] } }
+        : { y: 0, opacity: 1, transition: { duration: 0 } }
       }
       className="absolute bottom-5 left-0 right-0 mx-auto w-fit
                  bg-lt-card border border-lt-border rounded-2xl shadow-2xl
                  flex items-center px-2 py-2 h-[60px]"
     >
-      {/* 뒤로가기 */}
       <motion.button
         whileTap={{ scale: 0.88 }}
         transition={{ type: 'spring', stiffness: 500, damping: 25 }}

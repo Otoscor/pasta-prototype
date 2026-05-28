@@ -20,23 +20,17 @@ type Screen =
   | 'shop-home' | 'shop-detail' | 'shop-my'
   | 'food-scan' | 'food-scan-camera' | 'food-scan-search' | 'food-scan-result'
 
-const SHOP_TABS = new Set<Screen>(['shop-home', 'food-scan', 'shop-my', 'shop-detail'])
+const SHOP_SCREENS = new Set<Screen>(['shop-home', 'food-scan', 'shop-my', 'shop-detail'])
 
 export default function App() {
   const [authed, setAuthed] = useState(() => localStorage.getItem('pasta_auth') === 'true')
   const [screen, setScreen] = useState<Screen>('home')
-  const [prevScreen, setPrevScreen] = useState<Screen>('home')
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedProduct, setSelectedProduct] = useState<any>(null)
   const [scannedFood, setScannedFood] = useState<FoodItem | undefined>(undefined)
-  // 1 = shop-home→detail (슬라이드 레프트), -1 = detail→shop-home (슬라이드 라이트)
-  const navigate = (next: Screen) => {
-    setPrevScreen(screen)
-    setScreen(next)
-  }
 
+  const navigate = (next: Screen) => setScreen(next)
   const goHome = () => navigate('home')
-  const subNavAnimated = !SHOP_TABS.has(prevScreen)
 
   const renderScreen = () => {
     switch (screen) {
@@ -47,7 +41,6 @@ export default function App() {
       case 'shop-home':   return (
         <ShopHome
           onBack={goHome}
-          subNavAnimated={subNavAnimated}
           onNavigate={(s, data) => {
             if (s === 'shop-detail' && data) setSelectedProduct(data)
             navigate((s === 'shop-scan' ? 'food-scan' : s) as Screen)
@@ -60,14 +53,12 @@ export default function App() {
       case 'shop-my': return (
         <ShopMy
           onBack={goHome}
-          subNavAnimated={subNavAnimated}
           onNavigate={(id) => navigate((id === 'shop-scan' ? 'food-scan' : id) as Screen)}
         />
       )
       case 'food-scan': return (
         <FoodScan
           onBack={goHome}
-          subNavAnimated={subNavAnimated}
           onScan={() => navigate('food-scan-camera')}
           onSearch={() => navigate('food-scan-search')}
           onNavigate={(id) => navigate((id === 'shop-scan' ? 'food-scan' : id) as Screen)}
@@ -104,7 +95,7 @@ export default function App() {
     return <Login onLogin={() => setAuthed(true)} />
   }
 
-  const isShopScreen = SHOP_TABS.has(screen)
+  const isShopScreen = SHOP_SCREENS.has(screen)
 
   return (
     <MobileFrame lightMode={isShopScreen}>

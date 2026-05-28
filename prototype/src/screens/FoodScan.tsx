@@ -7,13 +7,11 @@ export default function FoodScan({
   onScan,
   onSearch,
   onNavigate,
-  subNavAnimated = true,
 }: {
   onBack: () => void
   onScan: () => void
   onSearch: () => void
   onNavigate: (id: string) => void
-  subNavAnimated?: boolean
 }) {
   return (
     <div className="relative flex flex-col h-full bg-lt-bg text-lt-text">
@@ -55,7 +53,7 @@ export default function FoodScan({
       </div>
 
       {/* Sub-nav */}
-      <ShopSubNav activeId="shop-scan" onBack={onBack} onNavigate={onNavigate} animated={subNavAnimated} />
+      <ShopSubNav activeId="shop-scan" onBack={onBack} onNavigate={onNavigate} />
 
     </div>
   )
