@@ -39,7 +39,7 @@ export default function ShopSubNav({
         whileTap={{ scale: 0.88 }}
         transition={{ type: 'spring', stiffness: 500, damping: 25 }}
         onClick={handleBack}
-        className="w-10 h-10 rounded-full bg-lt-input flex items-center justify-center flex-none ml-1"
+        className="w-10 h-10 flex items-center justify-center flex-none ml-1"
       >
         <ArrowLeft size={20} weight="bold" className="text-lt-secondary" />
       </motion.button>
