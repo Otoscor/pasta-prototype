@@ -28,7 +28,7 @@ export default function ShopSubNav({
     <motion.div
       initial={false}
       animate={exiting
-        ? { y: 72, opacity: 0, transition: { duration: 0.22, ease: [0.4, 0, 1, 1] } }
+        ? { y: 72, opacity: 0, transition: { duration: 0.22, ease: [0.4, 0, 1, 1] as [number, number, number, number] } }
         : { y: 0, opacity: 1, transition: { duration: 0 } }
       }
       className="absolute bottom-5 left-0 right-0 mx-auto w-fit
@@ -53,7 +53,7 @@ export default function ShopSubNav({
             transition={{ type: 'spring', stiffness: 500, damping: 25 }}
             onClick={() => onNavigate(id)}
             className={`flex flex-col items-center gap-0.5 w-[72px] justify-center
-              ${isActive ? 'text-accent' : 'text-lt-tertiary'}`}
+              ${isActive ? 'text-accent' : 'text-lt-secondary'}`}
           >
             <Icon size={22} weight={isActive ? 'fill' : 'regular'} />
             <span className="text-[11px] font-medium">{label}</span>
